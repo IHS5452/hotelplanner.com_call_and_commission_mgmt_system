@@ -18,3 +18,42 @@
 <li>view montly reports in the app</li>
 </ul>
 
+<h1>MySQL table to add</h1>
+
+CREATE TABLE `sales` (
+	`CallID` VARCHAR(25),
+	`call_status` VARCHAR(50),
+	`call_date` DATE,
+	`is_prepaid` VARCHAR(50),
+	`check_in_date` DATE,
+	`check_out_date` DATE,
+	`is_paid_out` VARCHAR(2),
+	`paid_out_date` VARCHAR(50),
+	`hotel_name` VARCHAR(500),
+	`total_bill` INT(500),
+	`commission_percentage` INT,
+	`total_commission` INT,
+	`is_canceled_booking` BOOLEAN,
+	`canceled_date` VARCHAR(50)
+);
+
+
+
+CREATE TABLE `timesheets` (
+	`TSID` VARCHAR(25),
+	`clockInTime` VARCHAR(50),
+	`clockInDate` VARCHAR(50),
+	`clockOutTime` VARCHAR(50),
+	`clockOutDate` VARCHAR(50),
+	`hoursWorked` VARCHAR(50),
+	`salesMade` VARCHAR(50),
+	`callsRcvd` VARCHAR(50)
+);
+
+
+
+CREATE TABLE `vars` (
+	`crntTSID` VARCHAR(50),
+	`isClockedIn` VARCHAR(15)
+);
+
