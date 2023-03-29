@@ -3,7 +3,8 @@
 <p><b>About this app</b>: This app is a companion app for hotelplanner.com independent hotel planners.</p>
 
 
-<p><b>Backstory</b>: I was one of their commission-based hotel planners, and relized that their system is not very orgnazationaly freindly. I wanted to make an app that did what I need to manage my calls, commissions, and QA tracking.\n Since then, I was kicked off the platform for not making sales, and have published this app here for my portfolio.</p>
+<p><b>Backstory</b>: I was one of their commission-based hotel planners, and relized that their system is not very orgnazationaly freindly. I wanted to make an app that did what I need to manage my calls, commissions, and QA tracking.</p>
+</p> Since then, I was kicked off the platform for not making sales, and have published this app here for my portfolio.</p>
 
 
 <h1>ALL planned features</h1>
