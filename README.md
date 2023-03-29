@@ -19,7 +19,7 @@
 </ul>
 
 <h1>MySQL table to add</h1>
-
+''
 CREATE TABLE `sales` (
 	`CallID` VARCHAR(25),
 	`call_status` VARCHAR(50),
@@ -57,3 +57,4 @@ CREATE TABLE `vars` (
 	`isClockedIn` VARCHAR(15)
 );
 
+''
