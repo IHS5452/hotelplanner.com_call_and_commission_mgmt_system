@@ -57,3 +57,6 @@ CREATE TABLE `vars` (
 	`crntTSID` VARCHAR(50),
 	`isClockedIn` VARCHAR(15)
 );
+
+insert into vars VALUES("NA","false");
+
