@@ -23,7 +23,7 @@ public class actions {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/" + dbName,"root","Polpper@1");
+                    "jdbc:mysql://localhost:3306/" + dbName,"root","enter-password-here");
 //here sonoo is database name, root is username and password
                 stmt=conn.createStatement();
         } catch (ClassNotFoundException ex) {
