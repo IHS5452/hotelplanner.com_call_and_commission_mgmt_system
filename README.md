@@ -19,6 +19,7 @@
 </ul>
 
 <h1>MySQL table to add</h1>
+<h3>Note: The database is called "hotelplannersystem", the username is set to the default root username, and the password will need changing. it is defaulted to "enter-password-here"</h3>
 
 CREATE TABLE `sales` (
 	`CallID` VARCHAR(25),
