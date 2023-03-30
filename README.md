@@ -31,7 +31,7 @@ CREATE TABLE `sales` (
 	`is_paid_out` VARCHAR(2),
 	`paid_out_date` VARCHAR(50),
 	`hotel_name` VARCHAR(500),
-	`total_bill` INT(500),
+	`total_bill` INT(25),
 	`commission_percentage` INT,
 	`total_commission` INT,
 	`is_canceled_booking` BOOLEAN,
