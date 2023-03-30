@@ -41,9 +41,9 @@ public class addToDatabase {
     
     
     public static void clockIn(String timeIn, String dateIn) {
-        
+        String timestamp = business.general.generatePunchID();
         try {
-            String sql = "INSERT INTO timesheets VALUES(\"" + business.general.generatePunchID() + "\",\"" + timeIn + "\",\"" + dateIn + "\",\"" + "TBA" + "\",\"" + "TBA" + "\",\"" +
+            String sql = "INSERT INTO timesheets VALUES(\"" + timestamp + "\",\"" + timeIn + "\",\"" + dateIn + "\",\"" + "TBA" + "\",\"" + "TBA" + "\",\"" +
                    "TBA" + "\",\"" + "TBA" + "\",\"" + "TBA" + "\");";
             Connection cnn = database.actions.returnConn();
             
@@ -51,7 +51,31 @@ public class addToDatabase {
             
             stmt.executeUpdate(sql);
             
+            classes.generalVars.setCureentTMSH(timestamp);
+            
             UI_main.AddToOutputArea("Clocked In Sucesfully.");
+        } catch (SQLException ex) {
+            Logger.getLogger(addToDatabase.class.getName()).log(Level.SEVERE, null, ex);
+                                          UI_main.AddToOutputArea(ex.getMessage());
+
+        }
+    }
+    
+    
+       public static void clockOut(String timeOut, String dateOut) {
+                String timestamp = business.general.generatePunchID();
+
+        try {
+            String sql = "UPDATE timesheets SET clockOutDate=\"" + dateOut + "\", clockOutTime = \"" + timeOut + "\" WHERE TSID=\"" +timestamp + "\";" ;
+            
+            
+            Connection cnn = database.actions.returnConn();
+            
+            Statement stmt = (Statement) cnn.createStatement();
+            
+            stmt.executeUpdate(sql);
+            
+            UI_main.AddToOutputArea("Clocked Out Sucesfully.");
         } catch (SQLException ex) {
             Logger.getLogger(addToDatabase.class.getName()).log(Level.SEVERE, null, ex);
                                           UI_main.AddToOutputArea(ex.getMessage());
