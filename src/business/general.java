@@ -8,6 +8,11 @@ import UI.UI_main;
 import java.sql.*;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,21 +22,61 @@ import java.util.logging.Logger;
  */
 public class general {
     
-    
+       public static String generateSaleID() {
+      // Generate random 5-digit number
+        Random random = new Random();
+        int randomNum = random.nextInt(90000) + 10000;
+        String randomNumString = String.valueOf(randomNum);
+ 
+        
+        
+        // Combine the generated parts to form the call ID
+        String callID = "S"+randomNumString + "-" + generateRandom3DigitNumber() + "-" + todaysdate();
+        return callID;    
+    } 
     public static String generateCallID() {
+      // Generate random 5-digit number
+        Random random = new Random();
+        int randomNum = random.nextInt(90000) + 10000;
+        String randomNumString = String.valueOf(randomNum);
+ 
         
-        return "12345-TEST";
+        
+        // Combine the generated parts to form the call ID
+        String callID = "C"+randomNumString + "-" + generateRandom3DigitNumber() + "-" + todaysdate();
+        return callID;    
     }
     
-    public static String todaysDate() {
+    public static String todaysdate() {
+             
+           LocalDateTime currentDate = LocalDateTime.now();  
+           System.out.println(currentDate);
+
+        String newstring = currentDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+
         
-        return "1_1_1900";
+        return newstring;
     }
-    
+
+      
+//            public static String todaysDateAndCurrentTime() {
+//             SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy ");
+//        LocalDate currentDate = LocalDate.now();
+//        String date = dateFormat.format(currentDate);
+//        return date;
+//    }
        
     public static String generatePunchID() {
+   Random random = new Random();
+        int randomNum1 = random.nextInt(90000) + 10000;
+        String randomNumStringOne = String.valueOf(randomNum1);
+ 
+                int randomNum2 = random.nextInt(90000) + 10000;
+        String randomNumStringTwo = String.valueOf(randomNum2);
         
-        return "54321-TEST";
+        // Combine the generated parts to form the call ID
+        String callID = "P"+randomNumStringOne + "-" + randomNumStringTwo+ "-" + todaysdate();
+        return callID;
     }
     
     
@@ -83,7 +128,7 @@ public class general {
     public static void startup() {
         System.out.println("Calling the startup class");
         try {
-            String SQL1 = "SELECT * FROM vars";
+            String SQL1 = "SELECT current_timesheet_id, is_clocked_in FROM app_data";
             Connection cnn = database.actions.returnConn();
             
             Statement st = cnn.createStatement();
@@ -96,8 +141,8 @@ public class general {
             if(rs.next()) {
                         System.out.println("getting the data from the vars DB table");
 
-                String CurrentTimestampID = rs.getString("crntTSID");
-                String isCLockedIn = rs.getString("isClockedIn");
+                String CurrentTimestampID = rs.getString("current_timesheet_id");
+                String isCLockedIn = rs.getString("is_clocked_in");
                 
                 classes.generalVars.setIsClockedIn(isCLockedIn);
                 classes.generalVars.setCureentTMSH(CurrentTimestampID);
@@ -118,6 +163,11 @@ public class general {
         }
     }
     
+     private static String generateRandom3DigitNumber() {
+        Random random = new Random();
+        int randomNum = random.nextInt(900) + 100;
+        return String.valueOf(randomNum);
+    }
     
   
     
