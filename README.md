@@ -21,41 +21,83 @@
 <h1>MySQL table to add</h1>
 <h3>Note: The database is called "hotelplannersystem", the username is set to the default root username, and the password will need changing. it is defaulted to "enter-password-here"</h3>
 
-CREATE TABLE `sales` (
-	`CallID` VARCHAR(25),
-	`call_status` VARCHAR(50),
-	`call_date` DATE,
-	`is_prepaid` VARCHAR(50),
-	`check_in_date` DATE,
-	`check_out_date` DATE,
-	`is_paid_out` VARCHAR(2),
-	`paid_out_date` VARCHAR(50),
-	`hotel_name` VARCHAR(500),
-	`total_bill` INT(25),
-	`commission_percentage` INT,
-	`total_commission` INT,
-	`is_canceled_booking` BOOLEAN,
-	`canceled_date` VARCHAR(50)
+-- Table: time_punches
+CREATE TABLE IF NOT EXISTS time_punches (
+    punch_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    clock_in_time DATETIME,
+    clock_out_time DATETIME,
+    is_recovered BOOLEAN,
+    UNIQUE KEY (user_id, clock_in_time)
 );
 
-
-
-CREATE TABLE `timesheets` (
-	`TSID` VARCHAR(25),
-	`clockInTime` VARCHAR(50),
-	`clockInDate` VARCHAR(50),
-	`clockOutTime` VARCHAR(50),
-	`clockOutDate` VARCHAR(50),
-	`hoursWorked` VARCHAR(50),
-	`salesMade` VARCHAR(50),
-	`callsRcvd` VARCHAR(50)
+-- Table: calls
+CREATE TABLE IF NOT EXISTS calls (
+    call_id INT AUTO_INCREMENT PRIMARY KEY,
+    call_status VARCHAR(50),
+    call_date DATE,
+    is_prepaid BOOLEAN,
+    linked_sale_id INT,
+    FOREIGN KEY (linked_sale_id) REFERENCES sales(sale_id)
 );
 
+-- Table: sales
+CREATE TABLE IF NOT EXISTS sales (
+    sale_id INT AUTO_INCREMENT PRIMARY KEY,
+    call_id INT,
+    call_status VARCHAR(50),
+    call_date DATE,
+    is_prepaid BOOLEAN,
+    check_in_date DATE,
+    check_out_date DATE,
+    is_paid_out BOOLEAN,
+    paid_out_date DATE,
+    hotel_name VARCHAR(500),
+    total_bill INT,
+    commission_percentage INT,
+    total_commission INT,
+    is_canceled_booking BOOLEAN,
+    canceled_date DATE,
+    FOREIGN KEY (call_id) REFERENCES calls(call_id)
+);
 
+-- Table: monthly_reports
+CREATE TABLE IF NOT EXISTS monthly_reports (
+    report_id INT AUTO_INCREMENT PRIMARY KEY,
+    report_month INT,
+    report_year INT,
+    report_file_path VARCHAR(500)
+);
 
-CREATE TABLE `vars` (
-	`crntTSID` VARCHAR(50),
-	`isClockedIn` VARCHAR(15)
+-- Table: app_data
+CREATE TABLE IF NOT EXISTS app_data (
+    current_timesheet_id VARCHAR(50),
+    is_clocked_in BOOLEAN
+);
+
+ --Table: timesheets
+CREATE TABLE IF NOT EXISTS timesheets (
+    timesheet_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    clock_in_time DATETIME,
+    clock_out_time DATETIME,
+    hours_worked INT,
+    sales_made INT,
+    calls_received INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Table: users
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    password VARCHAR(50),
+    email VARCHAR(100)
+);
+
+-- Insert initial data into app_data table
+INSERT INTO app_data (current_timesheet_id, is_clocked_in) VALUES ('NA', false);
+
 );
 
 insert into vars VALUES("NA","false");
