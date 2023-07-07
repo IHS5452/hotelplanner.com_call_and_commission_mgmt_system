@@ -21,7 +21,7 @@
 <h1>MySQL table to add</h1>
 <h3>Note: The database is called "hotelplannersystem", the username is set to the default root username, and the password will need changing. it is defaulted to "enter-password-here"</h3>
 
--- Table: time_punches
+-- Table: time_punches<br>
 CREATE TABLE IF NOT EXISTS time_punches (
     punch_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS time_punches (
     UNIQUE KEY (user_id, clock_in_time)
 );
 
--- Table: calls
+-- Table: calls<br>
 CREATE TABLE IF NOT EXISTS calls (
     call_id INT AUTO_INCREMENT PRIMARY KEY,
     call_status VARCHAR(50),
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS calls (
     FOREIGN KEY (linked_sale_id) REFERENCES sales(sale_id)
 );
 
--- Table: sales
+-- Table: sales<br>
 CREATE TABLE IF NOT EXISTS sales (
     sale_id INT AUTO_INCREMENT PRIMARY KEY,
     call_id INT,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS sales (
     FOREIGN KEY (call_id) REFERENCES calls(call_id)
 );
 
--- Table: monthly_reports
+-- Table: monthly_reports<br>
 CREATE TABLE IF NOT EXISTS monthly_reports (
     report_id INT AUTO_INCREMENT PRIMARY KEY,
     report_month INT,
@@ -69,13 +69,13 @@ CREATE TABLE IF NOT EXISTS monthly_reports (
     report_file_path VARCHAR(500)
 );
 
--- Table: app_data
+-- Table: app_data<br>
 CREATE TABLE IF NOT EXISTS app_data (
     current_timesheet_id VARCHAR(50),
     is_clocked_in BOOLEAN
 );
 
- --Table: timesheets
+ --Table: timesheets<br>
 CREATE TABLE IF NOT EXISTS timesheets (
     timesheet_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS timesheets (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
--- Table: users
+-- Table: users<br>
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50),
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(100)
 );
 
--- Insert initial data into app_data table
+-- Insert initial data into app_data table<br>
 INSERT INTO app_data (current_timesheet_id, is_clocked_in) VALUES ('NA', false);
 
 );
