@@ -25,8 +25,8 @@
 CREATE TABLE IF NOT EXISTS time_punches (
     punch_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    clock_in_time DATETIME,
-    clock_out_time DATETIME,
+    clock_in_time VARCHAR(500),
+    clock_out_time VARCHAR(500),
     is_recovered BOOLEAN,
     UNIQUE KEY (user_id, clock_in_time)
 );
@@ -79,8 +79,8 @@ CREATE TABLE IF NOT EXISTS vars (
 CREATE TABLE IF NOT EXISTS timesheets (
     timesheet_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    clock_in_time DATETIME,
-    clock_out_time DATETIME,
+    clock_in_time VARCHAR(500),
+    clock_out_time VARCHAR(500),
     hours_worked INT,
     sales_made INT,
     calls_received INT,
