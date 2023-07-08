@@ -23,28 +23,26 @@
 
 -- Table: time_punches<br>
 CREATE TABLE IF NOT EXISTS time_punches (
-    punch_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    punch_id VARCHAR(500),
+    user_id VARCHAR(500),
     clock_in_time VARCHAR(500),
     clock_out_time VARCHAR(500),
-    is_recovered BOOLEAN,
-    UNIQUE KEY (user_id, clock_in_time)
+    is_recovered BOOLEAN
 );
 
 -- Table: calls<br>
 CREATE TABLE IF NOT EXISTS calls (
-    call_id INT AUTO_INCREMENT PRIMARY KEY,
+    call_id VARCHAR(500),
     call_status VARCHAR(50),
     call_date DATE,
     is_prepaid BOOLEAN,
-    linked_sale_id INT,
-    FOREIGN KEY (linked_sale_id) REFERENCES sales(sale_id)
+    linked_sale_id VARCHAR(500)
 );
 
 -- Table: sales<br>
 CREATE TABLE IF NOT EXISTS sales (
-    sale_id INT AUTO_INCREMENT PRIMARY KEY,
-    call_id INT,
+    sale_id VARCHAR(500),
+    call_id VARCHAR(500),
     call_status VARCHAR(50),
     call_date DATE,
     is_prepaid BOOLEAN,
@@ -57,13 +55,12 @@ CREATE TABLE IF NOT EXISTS sales (
     commission_percentage INT,
     total_commission INT,
     is_canceled_booking BOOLEAN,
-    canceled_date DATE,
-    FOREIGN KEY (call_id) REFERENCES calls(call_id)
-);
+    canceled_date DATE
+    );
 
 -- Table: monthly_reports<br>
 CREATE TABLE IF NOT EXISTS monthly_reports (
-    report_id INT AUTO_INCREMENT PRIMARY KEY,
+    report_id VARCHAR(500),
     report_month INT,
     report_year INT,
     report_file_path VARCHAR(500)
@@ -77,19 +74,18 @@ CREATE TABLE IF NOT EXISTS vars (
 
  --Table: timesheets<br>
 CREATE TABLE IF NOT EXISTS timesheets (
-    timesheet_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    timesheet_id VARCHAR(500),
+    user_id VARCHAR(500),
     clock_in_time VARCHAR(500),
     clock_out_time VARCHAR(500),
     hours_worked INT,
     sales_made INT,
-    calls_received INT,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
+    calls_received INT
+    );
 
 -- Table: users<br>
 CREATE TABLE IF NOT EXISTS users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(500),
     username VARCHAR(50),
     password VARCHAR(50),
     email VARCHAR(100)
@@ -100,5 +96,4 @@ INSERT INTO vars (current_timesheet_id, is_clocked_in) VALUES ('NA', false);
 
 );
 
-insert into vars VALUES("NA","false");
 
