@@ -69,8 +69,8 @@ CREATE TABLE IF NOT EXISTS monthly_reports (
     report_file_path VARCHAR(500)
 );
 
--- Table: app_data<br>
-CREATE TABLE IF NOT EXISTS app_data (
+-- Table: vars<br>
+CREATE TABLE IF NOT EXISTS vars (
     current_timesheet_id VARCHAR(50),
     is_clocked_in BOOLEAN
 );
@@ -95,8 +95,8 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(100)
 );
 
--- Insert initial data into app_data table<br>
-INSERT INTO app_data (current_timesheet_id, is_clocked_in) VALUES ('NA', false);
+-- Insert initial data into vars table<br>
+INSERT INTO vars (current_timesheet_id, is_clocked_in) VALUES ('NA', false);
 
 );
 
