@@ -21,9 +21,9 @@ public class actions {
     public static void connect() {
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/" + dbName,"root","Passwd-here");
+                    "jdbc:mysql://localhost:3306/" + dbName,"root","polpper");
                 stmt=conn.createStatement();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(actions.class.getName()).log(Level.SEVERE, null, ex);

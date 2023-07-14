@@ -32,6 +32,8 @@ public class general {
         
         // Combine the generated parts to form the call ID
         String callID = "S"+randomNumString + "-" + generateRandom3DigitNumber() + "-" + todaysdate();
+                System.out.println(callID);
+
         return callID;    
     } 
     public static String generateCallID() {
@@ -44,6 +46,7 @@ public class general {
         
         // Combine the generated parts to form the call ID
         String callID = "C"+randomNumString + "-" + generateRandom3DigitNumber() + "-" + todaysdate();
+        System.out.println(callID);
         return callID;    
     }
     
@@ -76,13 +79,15 @@ public class general {
         
         // Combine the generated parts to form the call ID
         String callID = "P"+randomNumStringOne + "-" + randomNumStringTwo+ "-" + todaysdate();
+                        System.out.println(callID);
+
         return callID;
     }
     
     
     public static void getDeailsOfCLockIn(String timesheetID) {
         try {
-            String SQL_ClockInDetials = "SELECT * FROM timesheets WHERE TSID=\"" + timesheetID + "\";";
+            String SQL_ClockInDetials = "SELECT * FROM timesheets WHERE timesheet_id=\"" + timesheetID + "\";";
             Connection cnn = database.actions.returnConn();
             
             Statement st = cnn.createStatement();
@@ -93,22 +98,22 @@ public class general {
             
             
             if(rs.next()) {
-                String clockInTime = rs.getString("clockInTime");
-                String clockInDate = rs.getString("clockInDate");
-                String clockOutTime = rs.getString("clockOutTime");
-                String clockOutDate = rs.getString("clockOutDate");
-                String hoursWorked = rs.getString("hoursWorked");
-                String salesMade = rs.getString("salesMade");
-                String callsRcvd = rs.getString("callsRcvd");
+                String clockInTime = rs.getString("clock_in_time");
+//                String clockInDate = rs.getString("clockInDate");
+                String clockOutTime = rs.getString("clock_out_time");
+//                String clockOutDate = rs.getString("clockOutDate");
+                String hoursWorked = rs.getString("hours_worked");
+                String salesMade = rs.getString("sales_made");
+                String callsRcvd = rs.getString("calls_received");
                 
                 
                 
                 classes.timestamp.setCallsTkn(callsRcvd);
                classes.timestamp.setSalesMd(salesMade);
                 classes.timestamp.setHrsWorked(hoursWorked);
-                classes.timestamp.setClkInDt(clockInDate);
+//                classes.timestamp.setClkInDt(clockInDate);
                 classes.timestamp.setClkInTm(clockInTime);
-                classes.timestamp.setClkOutDt(clockOutDate);
+//                classes.timestamp.setClkOutDt(clockOutDate);
                 classes.timestamp.setClkOutTm(clockOutTime);
 
                 
@@ -128,7 +133,7 @@ public class general {
     public static void startup() {
         System.out.println("Calling the startup class");
         try {
-            String SQL1 = "SELECT current_timesheet_id, is_clocked_in FROM app_data";
+            String SQL1 = "SELECT current_timesheet_id, is_clocked_in FROM vars";
             Connection cnn = database.actions.returnConn();
             
             Statement st = cnn.createStatement();
@@ -149,10 +154,15 @@ public class general {
             }
                     System.out.println(classes.generalVars.getCureentTMSH());
 
-            if (classes.generalVars.getIsClockedIn().equals("Y")) {
+            if (classes.generalVars.getIsClockedIn().equals("1")) {
                 getDeailsOfCLockIn(classes.generalVars.getCureentTMSH());
                 UI_main.isInOUt.setText("In");
                 UI_main.cioBTN.setText("Clock Out");
+                UI_main.timeCI.setText(classes.timestamp.getClkInTm());
+            } else {
+                getDeailsOfCLockIn(classes.generalVars.getCureentTMSH());
+                UI_main.isInOUt.setText("Out");
+                UI_main.cioBTN.setText("Clock In");
                 UI_main.timeCI.setText(classes.timestamp.getClkInTm());
             }
         
