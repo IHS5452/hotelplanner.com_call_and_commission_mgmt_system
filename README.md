@@ -9,13 +9,13 @@
 
 <h1>ALL planned features</h1>
 <ul>
-<li>Clock In and out, and have the clock in and out time (Called "Time Punches") be recorded in a MySQL Database</li>
-<li>Recover clock in status when app is accidently closed</li>
-<li>Add calls with and without a linked sale for bookkeeping</li>
-<li>Pull up previous sales to edit the data recorded</li>
-<li>Pull up previous time punches to edit the data recorded</li>
-<li>Generate montly reports into a excel file</li>
-<li>view montly reports in the app</li>
+<li>✔️Clock In and out, and have the clock in and out time (Called "Time Punches") be recorded in a MySQL Database</li>
+<li>✔️Recover clock in status when app is accidently closed</li>
+<li>✔️❌Add calls with and without a linked sale for bookkeeping</li>
+<li>✔️❌Pull up previous sales to edit the data recorded</li>
+<li>❌Pull up previous time punches to edit the data recorded</li>
+<li>❌Generate montly reports into a excel file</li>
+<li>❌view montly reports in the app</li>
 </ul>
 
 <h1>MySQL table to add</h1>
