@@ -1,4 +1,4 @@
-<h1>Hotelplanner.com Sales and Managment system (Not finished yet)</h1>
+<h1>Hotelplanner.com Sales and Managment system (Work In Progress)</h1>
 
 <p><b>About this app</b>: This app is a companion app for hotelplanner.com independent hotel planners.</p>
 
@@ -102,3 +102,9 @@ INSERT INTO vars (current_timesheet_id, is_clocked_in) VALUES ('NA', false);
 
 insert into vars VALUES("NA","false");
 
+
+<h1>Change log by date</h1>
+<ul>
+<li><b>7-13-2023</b> - <br>* Changed the layout of the new sale logging layout <br>* Created and programed the window to edit commission entries, including: <br>1. Pulls up ALL orders (Even ones where no sale was made) in a table<br> 2. Populates the details of the ID in the provided text fields.<br><br>Note: There is a save button there, but it does not work yet.</li>
+    
+</ul>
