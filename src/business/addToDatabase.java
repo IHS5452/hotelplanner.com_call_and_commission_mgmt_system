@@ -24,7 +24,7 @@ public class addToDatabase {
 
         System.out.println("Going to the calls insert");
 
-String sql = "INSERT INTO calls VALUES ('" + callID + "','confirmed', CURDATE(), " + isPrepaid + ", '" + saleID + "')";
+String sql = "INSERT INTO calls VALUES ('" + callID + "','confirmed', " + isPrepaid + ", '" + saleID + "',NOW(),NULL)";
     
         Connection cnn = database.actions.returnConn();
         Statement stmt = cnn.createStatement();
@@ -62,7 +62,7 @@ sql = "INSERT INTO sales VALUES ('" + saleID + "', '" + callID + "', 'confirmed'
         String saleID = business.general.generateSaleID();
                         System.out.println(saleID);
 
-        String sql = "INSERT INTO calls  VALUES ('" + callID + "','noSale', CURDATE(), '" + "NULL" + "')";
+String sql = "INSERT INTO calls VALUES ('" + callID + "','noSale', " + "NULL" + ", '" + saleID + "', '" + callStartDate + "','" + callEndDate + "')";
 
         Connection cnn = database.actions.returnConn();
         Statement stmt = cnn.createStatement();
@@ -71,10 +71,11 @@ sql = "INSERT INTO sales VALUES ('" + saleID + "', '" + callID + "', 'confirmed'
         ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next()) {
             String callId = general.generateCallID();
-            sql = "INSERT INTO sales  VALUES ('"+ saleID + "','"
-                    + callID + "', 'noSale', CURDATE(), "+
-                    "NULL, NULL, NULL, "
-                    + "NULL','NULL'" + "0.00" + ", " + "35" + ", " + "0.00" + ", 'NULL', 'NULL')";
+          sql = "INSERT INTO sales VALUES ('"+ saleID + "','"
++ callID + "', 'noSale', CURDATE(), "+
+"NULL, NULL, NULL, "
++ "NULL','NULL','NULL," + "0.00" + ", " + "35" + ", " + "0.00" + ", 'NULL', 'NULL')";
+
             stmt.executeUpdate(sql);
 
             UI_main.AddToOutputArea("Added Successfully.");
