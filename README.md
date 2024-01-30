@@ -18,9 +18,8 @@
 <li>❌view montly reports in the app</li>
 </ul>
 
-<h1>MySQL table to add</h1>
+<h1>The MYSQL Table to add to your database is now in a .sql file. you just need to import it.</h1>
 <h3>Note: The database is called "hotelplannersystem", the username is set to the default root username, and the password will need changing. it is defaulted to "enter-password-here"</h3>
-<h1>The .sql file is uploaded to the project</h1>
 <h1>Change log by date</h1>
 <ul>
 <li><b>7-13-2023</b> - <br>* Changed the layout of the new sale logging layout <br>* Created and programed the window to edit commission entries, including: <br>1. Pulls up ALL orders (Even ones where no sale was made) in a table<br> 2. Populates the details of the ID in the provided text fields.<br><br>Note: There is a save button there, but it does not work yet.</li>
