@@ -4,6 +4,14 @@
  */
 package UI.edit;
 
+import classes.calls;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author iansc
@@ -27,39 +35,51 @@ public class editCallEntry extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        callsTable = new javax.swing.JTable();
+        isPrepaidBookinbg_cb = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        LinkedSaleID_txt = new javax.swing.JTextField();
+        starttime_txt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        endtime_txt = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        sttaus_txt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        callsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Call ID", "Call Status", "Start Time", "End Time"
+                "Call ID", "Sale ID", "Call Status", "Start Time", "End Time"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, true, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        callsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callsTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(callsTable);
 
-        jCheckBox1.setText("Is Prepaid Booking");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        isPrepaidBookinbg_cb.setText("Is Prepaid Booking");
+        isPrepaidBookinbg_cb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                isPrepaidBookinbg_cbActionPerformed(evt);
             }
         });
 
@@ -69,29 +89,38 @@ public class editCallEntry extends javax.swing.JFrame {
 
         jLabel3.setText("End Date/Time");
 
+        jLabel4.setText("Call Status");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jCheckBox1)
-                            .addGap(27, 27, 27)
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(isPrepaidBookinbg_cb)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(LinkedSaleID_txt))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(starttime_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(endtime_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sttaus_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -101,24 +130,102 @@ public class editCallEntry extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
+                    .addComponent(isPrepaidBookinbg_cb)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LinkedSaleID_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(starttime_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(endtime_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sttaus_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void isPrepaidBookinbg_cbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isPrepaidBookinbg_cbActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_isPrepaidBookinbg_cbActionPerformed
+
+    
+    Boolean isPrepaid;
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+calls c = new calls();
+
+             DefaultTableModel tableModel = (DefaultTableModel) callsTable.getModel();
+
+      
+ try {
+            database.actions.connect();
+            Connection connection  = database.actions.returnConn();
+
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM calls";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                                String callID = resultSet.getString("call_id");
+                String callStatus = resultSet.getString("call_status");
+                String startDateTime = resultSet.getString("call_date_start");
+                String endDateTime = resultSet.getString("call_date_end");
+                String listedSaleID = resultSet.getString("linked_sale_id");
+                isPrepaid = resultSet.getBoolean("is_prepaid");
+                
+
+                tableModel.addRow(new Object[]{ callID,listedSaleID, callStatus, startDateTime, endDateTime});
+            }
+
+//            resultSet.close();
+//            statement.close();
+//            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
+
+    private void callsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callsTableMouseClicked
+calls c = new calls();
+
+
+int index = callsTable.getSelectedRow();
+
+TableModel model = callsTable.getModel();
+
+
+String callID = model.getValueAt(index, 0).toString();
+
+String saleID = model.getValueAt(index, 1).toString();
+
+String callStatus = model.getValueAt(index, 2).toString();
+
+String startTime = model.getValueAt(index, 3).toString();
+String endTime = model.getValueAt(index, 4).toString();
+
+LinkedSaleID_txt.setText(saleID);
+endtime_txt.setText(endTime);
+starttime_txt.setText(startTime);
+sttaus_txt.setText(callStatus);
+
+if (isPrepaid) {
+    isPrepaidBookinbg_cb.isSelected();
+} else {
+    isPrepaidBookinbg_cb.setSelected(false);
+}
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_callsTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -157,14 +264,28 @@ public class editCallEntry extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JTextField LinkedSaleID_txt;
+    private javax.swing.JTable callsTable;
+    private javax.swing.JTextField endtime_txt;
+    private javax.swing.JCheckBox isPrepaidBookinbg_cb;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField starttime_txt;
+    private javax.swing.JTextField sttaus_txt;
     // End of variables declaration//GEN-END:variables
+
+public void clear() {
+ LinkedSaleID_txt.setText("");
+ endtime_txt.setText("");
+starttime_txt.setText("");
+isPrepaidBookinbg_cb.setSelected(false);
 }
+}
+
+
+
+
+
